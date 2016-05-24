@@ -7,19 +7,43 @@ import java.util.Scanner;
 
 public class Main {
 
+    static InventoryItem createItem(String text, int quantity, String category) {
+        switch (category) {
+            case "Armor":
+                return new Armor(text, quantity);
+            case "Weapons":
+                return new Weapons(text, quantity);
+            case "Food":
+                return new Food(text, quantity);
+            case "Potions":
+                return new Potions(text, quantity);
+            case "Scrolls":
+                return new Scrolls(text, quantity);
+            default:
+                System.out.println("Invalid Category");
+                return new InventoryItem(text, quantity, "Invalid Category");
+        }
+
+
+    }
+
     static ArrayList<InventoryItem> items = new ArrayList<>();
 
     public static void listInventory(ArrayList<InventoryItem> items) {
         for (InventoryItem inventoryItem : items) {
-            System.out.println("[" + inventoryItem.quantity + "] " + inventoryItem.text);
+            System.out.printf("[%s] %s - Category: %s\n",inventoryItem.quantity, inventoryItem.text, inventoryItem.category);
 
         }
     }
 
-    public static void createItem(Scanner scanner, ArrayList<InventoryItem> items) {
+    public static void create(Scanner scanner, ArrayList<InventoryItem> items) {
         System.out.println("Enter the item to be created: ");
         String text = scanner.nextLine();
-        InventoryItem item = new InventoryItem(text, 1);
+        System.out.println("Enter the item's category: [Armor/Weapons/Food/Potions/Scrolls]");
+        String category = scanner.nextLine();
+        int quantity = 1;
+        //InventoryItem item = new InventoryItem(text, 1, category);
+        InventoryItem item = createItem(text, quantity, category);
         items.add(item);
     }
 
@@ -45,6 +69,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+        String category = "Cheese";
 
         while (true) {
 
@@ -60,7 +85,7 @@ public class Main {
 
             switch (option) {
                 case "1": {
-                    createItem(scanner, items);
+                    create(scanner, items);
                     break;
                 }
                 case "2": {
@@ -73,7 +98,7 @@ public class Main {
                     System.out.println("Enter the updated quantity: ");
                     String quantityStr = scanner.nextLine();
                     int quantity = Integer.valueOf(quantityStr);
-                    InventoryItem item = new InventoryItem(text, quantity);
+                    InventoryItem item =new InventoryItem(text, quantity, category);
                     int index = -1;
                     int i = 0;
                     for (InventoryItem temp : items) {
@@ -81,11 +106,13 @@ public class Main {
                         temp = items.get(i);
                         if (temp.text.equals(text)) {
                             index = i;
+                            category = temp.category;
                         }
 
 
                         i++;
                     }
+                    item.category = category;
                     items.set(index, item );
                     break;
                 }
