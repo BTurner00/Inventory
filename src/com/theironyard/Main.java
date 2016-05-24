@@ -24,15 +24,22 @@ public class Main {
     }
 
     public static void removeItem(Scanner scanner, ArrayList<InventoryItem> items) {
-        int i = 0;
+        int index = -1;
         System.out.println("Enter the item to be removed: ");
         String text = scanner.nextLine();
 
-        /*for (InventoryItem item : items) {
-            if (items[0].equals(text)) {
+        int i = 0;
+        for (InventoryItem temp : items) {
 
+            temp = items.get(i);
+            if (temp.text.equals(text)) {
+                index = i;
             }
-        }*/
+
+
+            i++;
+        }
+        items.remove(index);
     }
 
     public static void main(String[] args) {
@@ -67,7 +74,19 @@ public class Main {
                     String quantityStr = scanner.nextLine();
                     int quantity = Integer.valueOf(quantityStr);
                     InventoryItem item = new InventoryItem(text, quantity);
-                    items.set(items.indexOf(item), item);
+                    int index = -1;
+                    int i = 0;
+                    for (InventoryItem temp : items) {
+
+                        temp = items.get(i);
+                        if (temp.text.equals(text)) {
+                            index = i;
+                        }
+
+
+                        i++;
+                    }
+                    items.set(index, item );
                     break;
                 }
             }
