@@ -68,10 +68,35 @@ public class Main {
         items.remove(index);
     }
 
+    public static void updateQuantity (Scanner scanner, ArrayList<InventoryItem> items) {
+        String category = new String();
+        System.out.println("Enter the item for quantity update: ");
+        String text = scanner.nextLine();
+        System.out.println("Enter the updated quantity: ");
+        String quantityStr = scanner.nextLine();
+        int quantity = Integer.valueOf(quantityStr);
+        InventoryItem item =new InventoryItem(text, quantity, category);
+        int index = -1;
+        int i = 0;
+        for (InventoryItem temp : items) {
+
+            temp = items.get(i);
+            if (temp.text.equals(text)) {
+                index = i;
+                category = temp.category;
+            }
+
+
+            i++;
+        }
+        item.category = category;
+        items.set(index, item );
+    }
+
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
-        String category = "Cheese";
+
 
         while (true) {
 
@@ -95,27 +120,7 @@ public class Main {
                     break;
                 }
                 case "3": {
-                    System.out.println("Enter the item for quantity update: ");
-                    String text = scanner.nextLine();
-                    System.out.println("Enter the updated quantity: ");
-                    String quantityStr = scanner.nextLine();
-                    int quantity = Integer.valueOf(quantityStr);
-                    InventoryItem item =new InventoryItem(text, quantity, category);
-                    int index = -1;
-                    int i = 0;
-                    for (InventoryItem temp : items) {
-
-                        temp = items.get(i);
-                        if (temp.text.equals(text)) {
-                            index = i;
-                            category = temp.category;
-                        }
-
-
-                        i++;
-                    }
-                    item.category = category;
-                    items.set(index, item );
+                    updateQuantity(scanner, items);
                     break;
                 }
             }
