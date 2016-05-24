@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    static InventoryItem createItem(String text, int quantity, String category) {
+    static InventoryItem createItem(String text, int quantity, String category) throws Exception{
         switch (category) {
             case "Armor":
                 return new Armor(text, quantity);
@@ -20,8 +20,10 @@ public class Main {
             case "Scrolls":
                 return new Scrolls(text, quantity);
             default:
-                System.out.println("Invalid Category");
-                return new InventoryItem(text, quantity, "Invalid Category");
+                //System.out.println("Invalid Category");
+                //return new InventoryItem(text, quantity, "Invalid Category");
+
+                throw new Exception("Invalid Category!");
         }
 
 
@@ -36,7 +38,7 @@ public class Main {
         }
     }
 
-    public static void create(Scanner scanner, ArrayList<InventoryItem> items) {
+    public static void create(Scanner scanner, ArrayList<InventoryItem> items) throws Exception {
         System.out.println("Enter the item to be created: ");
         String text = scanner.nextLine();
         System.out.println("Enter the item's category: [Armor/Weapons/Food/Potions/Scrolls]");
@@ -66,7 +68,7 @@ public class Main {
         items.remove(index);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
         String category = "Cheese";
